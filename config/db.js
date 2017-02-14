@@ -1,5 +1,5 @@
 module.exports = {
-	url : 'mongodb://<user>:<pass>@mongo.onmodulus.net:27017/uw45mypu'
+	url : 'mongodb://<user>:<pass>@mongo.onmodulus.net:27017/uw45mypu',
 	/** TWITTER APP CONFIGURATION
 	 * consumer_key
 	 * consumer_secret

@@ -32,4 +32,48 @@ exports = module.exports = app; 						// expose app
 
 
 // Pass configuration to Twit
-var Twitter = new twit(db);
+var Twitter = new twit({
+	consumer_key: '6LuP5PwdW0UiSXeVAZqqxZzwE',  
+	consumer_secret: 'EVlkKkkz4UFqG2FOtDthLlJIzSrwKf7K9QDr9N1oaZltaVSnX6',
+	access_token: '830092639596904448-qLUuggZI7EAE5lPobmEvkYAd2qwfrgT',  
+	access_token_secret: 'SStj33hLlvPgRzBSylm6Zf7m1142Pzpj76jPMLrRU7EVy'	
+})
+ 
+/* Twitter.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
+  console.log(data)
+}) */
+
+// Twitter Stream API
+var stream = Twitter.stream('statuses/filter', { follow: '830142586354597888' } );  
+
+stream.on('tweet', function (tweet) {
+    Twitter.post('statuses/update', { status: unicornifyTheDonald( tweet.text ) + " https://twitter.com/testingDonald/status/" + tweet.id_str }, function(err, data, response) {
+    console.log(data)
+    })
+})
+var unicornDictionary = {
+    "AMERICA" : "THE WORLD OF HARRY POTTER",
+    "\"evil\"" : "\"unicorns\"",
+    "country!" : "beauty pagents",
+    "SECURITY" : "CHICKEN WINGS",
+    "COURT" : "HAWAII",
+    "Trump" : "Mr. Universe",
+}
+
+function unicornifyTheDonald( tweet ){
+var words = tweet.split(" "),
+    i;
+var unicornifiedDonald = "";
+
+    for (i = 0; i < words.length; i++) {
+        var word = words[i];
+        if(unicornDictionary.hasOwnProperty( word ) ) {
+            unicornifiedDonald = unicornifiedDonald + unicornDictionary[ word ];
+        } else {
+            unicornifiedDonald = unicornifiedDonald + word;
+        }
+        unicornifiedDonald = unicornifiedDonald + " ";
+    }
+   console.log(unicornifiedDonald);
+   return unicornifiedDonald + " #OPPOTUS";
+}
