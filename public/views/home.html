@@ -7,7 +7,7 @@
 		  <h4>Replies	</h4>
 		</div><span class="triangle"></span>		
 		<div>
-		<div class="twData"> #stats </div>
+		<div class="twData"> {{ repliesCount }} </div>
 		</div>
 	  </div>
 
@@ -16,7 +16,7 @@
 		  <h4>Quotes	</h4>
 		</div><span class="triangle"></span>				
 		<div>
-		<div class="twData"> #stats </div>
+		<div class="twData"> {{ quotesCount }} </div>
 		</div>
 	  </div>
 
@@ -25,12 +25,18 @@
 		  <h4>Likes	</h4>
 		</div><span class="triangle"></span>		
 		<div>
-		<div class="twData"> #stats </div>
-		</div>
-
+		<div class="twData"> {{ likesCount }} </div>
+		</div>   
 	  </div>
 
-	  
 	</div><!-- END OF ROWS -->
-
 </div>
+
+	<div class="row">	
+	 <div class="col-xs-6 col-sm-6">
+	  	Agrees -Directive
+	 </div>
+	<div class="col-xs-6 col-sm-6">
+	  	Disagrees -Directive
+	 </div>	  
+	</div><!-- END OF ROWS -->	

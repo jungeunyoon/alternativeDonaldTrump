@@ -43,7 +43,7 @@ var Twitter = new twit({
   console.log(data)
 }) */
 
-// Twitter Stream API
+/* Twitter Stream API
 var stream = Twitter.stream('statuses/filter', { follow: '830142586354597888' } );  
 
 stream.on('tweet', function (tweet) {
@@ -76,4 +76,4 @@ var unicornifiedDonald = "";
     }
    console.log(unicornifiedDonald);
    return unicornifiedDonald + " #OPPOTUS";
-}
+} */
