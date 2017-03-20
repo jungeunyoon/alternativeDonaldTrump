@@ -4,6 +4,7 @@ var app            = express();
 var mongoose       = require('mongoose');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var cloudinary     = require('cloudinary');
 
 // configuration ===========================================
 	
@@ -38,10 +39,77 @@ var Twitter = new twit({
 	access_token: '830092639596904448-qLUuggZI7EAE5lPobmEvkYAd2qwfrgT',  
 	access_token_secret: 'SStj33hLlvPgRzBSylm6Zf7m1142Pzpj76jPMLrRU7EVy'	
 })
+
+
+/*cloudinary.uploader.upload('my_image.jpg', function(result) { console.log(result) },
+                           { public_id: "team-web-designers/oppotus/tweets/testing" });
+*/
+
+cloudinary.config({ 
+  cloud_name: 'livingdirect', 
+  api_key: '427973338788113', 
+  api_secret: 'deLuh7UYhtejFFQEaYFLP_y7jk8' 
+});
+
+
+
+
+var stream = Twitter.stream('statuses/filter', { follow: '830142586354597888' } );  
+
+stream.on('tweet', function (tweet) {
+
+    
+    // style tweet.text
+    var styledTweet = tweet;
+    var transformationImage = "text:Arial_80:" + styledTweet;
  
-/* Twitter.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
-  console.log(data)
-}) */
+ /*   
+cloudinary.v2.uploader.upload("public/images/testing.jpeg", 
+{ folder: "team-web-designers/oppotus/tweets/",
+transformation: [
+  {overlay: transformationImage}
+  ]}, 
+        function(error, result) {
+        console.log(result); 
+        imageURL = result.url;
+        });*/
+        var imageURL = "";
+        
+getImageURL(transformationImage, function(returnValue) {
+imageURL = returnValue;
+})
+        
+    Twitter.post('statuses/update', { status: getImageURL(transformationImage) + " #OPPOTUS" }, function(err, data, response) {
+    console.log(data)
+    })
+})
+
+
+
+
+function getImageURL (transformationImage, callback) {
+var imageURL = "";
+
+cloudinary.v2.uploader.upload("public/images/testing.jpeg", 
+{ folder: "team-web-designers/oppotus/tweets/",
+transformation: [
+  {overlay: transformationImage}
+  ]}, 
+        function(error, result) {
+        console.log(result); 
+        imageURL = result.url;
+        
+        callback(result.url);
+        });
+        
+       
+       
+       return imageURL; 
+}
+
+
+// tweet mangler
+/*
 
 // Twitter Stream API
 var stream = Twitter.stream('statuses/filter', { follow: '830142586354597888' } );  
@@ -51,6 +119,8 @@ stream.on('tweet', function (tweet) {
     console.log(data)
     })
 })
+
+
 var unicornDictionary = {
     "AMERICA" : "THE WORLD OF HARRY POTTER",
     "\"evil\"" : "\"unicorns\"",
@@ -77,3 +147,5 @@ var unicornifiedDonald = "";
    console.log(unicornifiedDonald);
    return unicornifiedDonald + " #OPPOTUS";
 }
+
+*/
